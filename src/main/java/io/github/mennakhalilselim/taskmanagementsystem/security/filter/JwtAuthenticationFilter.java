@@ -1,6 +1,7 @@
 package io.github.mennakhalilselim.taskmanagementsystem.security.filter;
 
 import io.github.mennakhalilselim.taskmanagementsystem.security.service.JwtService;
+import io.github.mennakhalilselim.taskmanagementsystem.security.service.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenBlacklistService tokenBlacklistService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -38,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .filter(userEmail -> SecurityContextHolder.getContext().getAuthentication() == null)
                         .ifPresent(userEmail -> {
                             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-                            if (jwtService.isTokenValid(jwt, userDetails)) {
+                            if (jwtService.isTokenValid(jwt, userDetails) && !tokenBlacklistService.isBlacklisted(jwt)) {
                                 setAuthentication(userDetails, request);
                             }
                         }));

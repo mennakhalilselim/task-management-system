@@ -7,10 +7,12 @@ import io.github.mennakhalilselim.taskmanagementsystem.model.entity.User;
 import io.github.mennakhalilselim.taskmanagementsystem.respository.UserRepository;
 import io.github.mennakhalilselim.taskmanagementsystem.security.model.SecurityUser;
 import io.github.mennakhalilselim.taskmanagementsystem.security.service.JwtService;
+import io.github.mennakhalilselim.taskmanagementsystem.security.service.TokenBlacklistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TokenBlacklistService tokenBlacklistService;
 
     public AuthenticationResponse register(RegisterRequest request) {
         User user = User.builder()
@@ -56,5 +59,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .email(user.getEmail())
                 .token(token)
                 .build();
+    }
+
+    @Override
+    public void logout(String authHeader) {
+        String token = authHeader.substring("Bearer ".length()).trim();
+        tokenBlacklistService.blacklist(token);
+        SecurityContextHolder.clearContext();
     }
 }
