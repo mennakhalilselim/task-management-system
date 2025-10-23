@@ -38,7 +38,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .name(user.getName())
-                .email(user.getEmail())
                 .token(token)
                 .build();
     }
@@ -56,7 +55,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .name(user.getName())
-                .email(user.getEmail())
                 .token(token)
                 .build();
     }
