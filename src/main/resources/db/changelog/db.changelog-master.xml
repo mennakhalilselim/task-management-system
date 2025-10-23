@@ -7,5 +7,6 @@
     <include file="changeset/001_create_users_table.xml" relativeToChangelogFile="true"/>
     <include file="changeset/002_create_tasks_table.xml" relativeToChangelogFile="true"/>
     <include file="changeset/003-insert-sample-data.xml" relativeToChangelogFile="true"/>
+    <include file="changeset/004-rename-user-id-to-owner-id-in-tasks-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

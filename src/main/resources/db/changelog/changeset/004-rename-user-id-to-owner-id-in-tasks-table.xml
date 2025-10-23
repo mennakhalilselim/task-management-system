@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="1761220809826-1" author="Menna Selim">
+        <dropForeignKeyConstraint baseTableName="tasks"
+                                  constraintName="fk_task_user"/>
+
+        <renameColumn tableName="tasks"
+                      oldColumnName="user_id"
+                      newColumnName="owner_id"
+                      columnDataType="UUID"/>
+
+        <addForeignKeyConstraint baseTableName="tasks"
+                                 baseColumnNames="owner_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_task_owner"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="tasks"
+                                      constraintName="fk_task_owner"/>
+
+            <renameColumn tableName="tasks"
+                          oldColumnName="owner_id"
+                          newColumnName="user_id"
+                          columnDataType="UUID"/>
+
+            <addForeignKeyConstraint baseTableName="tasks"
+                                     baseColumnNames="user_id"
+                                     referencedTableName="users"
+                                     referencedColumnNames="id"
+                                     constraintName="fk_task_user"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

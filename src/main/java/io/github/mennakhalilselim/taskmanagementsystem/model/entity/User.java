@@ -29,6 +29,6 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "userId")
-    private List<Task> pictures;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Task> tasks;
 }

@@ -10,7 +10,6 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tasks")
@@ -31,9 +30,7 @@ public class Task extends BaseEntity {
     @Column(nullable = false, length = 50)
     private TaskStatus status = TaskStatus.OPEN;
 
-    private String url;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User userId;
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 }

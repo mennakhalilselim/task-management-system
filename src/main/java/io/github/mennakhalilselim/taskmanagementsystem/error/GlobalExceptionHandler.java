@@ -1,5 +1,6 @@
 package io.github.mennakhalilselim.taskmanagementsystem.error;
 
+import io.github.mennakhalilselim.taskmanagementsystem.error.exception.TaskNotFound;
 import io.github.mennakhalilselim.taskmanagementsystem.model.dto.response.ApiResponseDto;
 import io.github.mennakhalilselim.taskmanagementsystem.util.ApiResponseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiResponseDto<Void>> handleBadCredentials(BadCredentialsException ex) {
         return ApiResponseUtil.unauthorized("Invalid username or password");
+    }
+
+    @ExceptionHandler(TaskNotFound.class)
+    public ResponseEntity<ApiResponseDto<Void>> handlePictureNotFound(TaskNotFound ex) {
+        return ApiResponseUtil.notFound(ex.getMessage());
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
