@@ -92,7 +92,7 @@ docker run -p 8080:8080 <image-name>
 
 ### Postman Collection
 
-A Postman collection is included in the repository (`task-management.postman_collection.json`).
+A [Postman Collection](https://github.com/mennakhalilselim/task-management-system/blob/main/task-management.postman_collection.json) is included in the repository (`task-management.postman_collection.json`).
 
 To use it:
 1. Import the collection into Postman
